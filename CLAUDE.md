@@ -30,6 +30,8 @@ NTW is an old game with many quirks. For example:
     Game files list with lowercase paths. Pillow (pip) can read/write DDS (DXT5) and TGA (use compression=None); rebuild mips if replacing a mipmapped DDS.
 16. Unit variants are binary-searchable: extract variantmodels/units from game_files and grep UTF-16 strings (e.g. to find which units use a part).
 17. Verified working (2026-11-26): Fusilier-Grenadiers unit (kitbash, stats, costs, loc, recruitment). Unit cards are still placeholder art; real screenshots planned.
+18. NEVER commit or push anything in the `temp/` folder. It is for development use only: all references (FunctionalModExample, ImageReferences, the game copy) live there.
+    Only commit LICENSE, CLAUDE.md and the packs in mod/ unless told otherwise. (Reference paths in these notes now live under temp/.)
 edit this list as you work to add more reminders for yourself.
 
 **General Outline**
