@@ -32,6 +32,14 @@ NTW is an old game with many quirks. For example:
 17. Verified working (2026-11-26): Fusilier-Grenadiers unit (kitbash, stats, costs, loc, recruitment). Unit cards are still placeholder art; real screenshots planned.
 18. NEVER commit or push anything in the `temp/` folder. It is for development use only: all references (FunctionalModExample, ImageReferences, the game copy) live there.
     Only commit LICENSE, CLAUDE.md and the packs in mod/ unless told otherwise. (Reference paths in these notes now live under temp/.)
+19. NEW TEXTURES (done for Fusilier-Chasseurs): override France's atlas in Movie pack tw_nap_atlas.pack (4096² DXT5; free space at y>=3840).
+    Splice 4x4 DXT5 blocks into france_diffuse.dds per mip (levels 0-5 for 128x256), append entries to the .atlas (binary: u32 ver, u32 unk, u32 count, then
+    entries of 2x512-byte UTF-16 strings + 6 float32: u,v,w,h normalised plus width,height px; gloss/colour_mask s1 end with `_gloss`/`_colour`).
+    Other channel atlases get entries pointing at an existing similar rect. Scripts lived in temp/work (atlaslib.py, atlasfile.py, build_atlas.py) - temp is not committed.
+    Mesh files: 4 LODs, 64-byte vertices (pos float3 first), see tw_nap_tall_plume. Plume UV: lower ~40% of height uses the bottom texture panel.
+20. Atlas free space (france_diffuse, 4096²): only y>=3840 (x 0..640 now used: chasseur plume, chasseur epaulette, grenadier epaulette, silver shako 256² downscaled from 384²).
+    Unit variant strings are fixed-width UTF-16 fields: patch them in place by byte replace (see temp/work/patchvar.py), then add_files_from_disk with include_base_folder=true
+    (paths must include the `variantmodels/` folder). Deleting wrongly-added paths: delete_files with the stray folder. Clear AppData army_setups/battle_preferences if custom battle crashes after adding units.
 edit this list as you work to add more reminders for yourself.
 
 **General Outline**
