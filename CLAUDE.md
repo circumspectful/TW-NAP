@@ -35,11 +35,15 @@ NTW is an old game with many quirks. For example:
 19. NEW TEXTURES (done for Fusilier-Chasseurs): override France's atlas in Movie pack tw_nap_atlas.pack (4096² DXT5; free space at y>=3840).
     Splice 4x4 DXT5 blocks into france_diffuse.dds per mip (levels 0-5 for 128x256), append entries to the .atlas (binary: u32 ver, u32 unk, u32 count, then
     entries of 2x512-byte UTF-16 strings + 6 float32: u,v,w,h normalised plus width,height px; gloss/colour_mask s1 end with `_gloss`/`_colour`).
-    Other channel atlases get entries pointing at an existing similar rect. Scripts lived in temp/work (atlaslib.py, atlasfile.py, build_atlas.py) - temp is not committed.
+    THE ENGINE READS EVERY CHANNEL (normal/gloss/mask) AT THE DIFFUSE RECT, so entries in the other .atlas files must mirror the diffuse rect, and france_normal.dds MUST be spliced
+    at the same rect (zero normals = dark blotches; this caused the apron splotches). Gloss/colour_mask free area is zero = matte/untinted, fine. Scripts lived in temp/work (atlaslib.py, atlasfile.py, build_atlas.py) - temp is not committed.
     Mesh files: 4 LODs, 64-byte vertices (pos float3 first), see tw_nap_tall_plume. Plume UV: lower ~40% of height uses the bottom texture panel.
 20. Atlas free space (france_diffuse, 4096²): only y>=3840 (x 0..640 now used: chasseur plume, chasseur epaulette, grenadier epaulette, silver shako 256² downscaled from 384²).
     Unit variant strings are fixed-width UTF-16 fields: patch them in place by byte replace (see temp/work/patchvar.py), then add_files_from_disk with include_base_folder=true
     (paths must include the `variantmodels/` folder). Deleting wrongly-added paths: delete_files with the stray folder. Clear AppData army_setups/battle_preferences if custom battle crashes after adding units.
+21. SLOT TRICK (from NTW3 sappers): any category slot can hold any mesh. The Plumes slot with Torsos/German_Militia_Coat/mesh + a texture that is fully transparent except
+    UV rect (0,256)-(136,512) of 512 shows only the coat's front skirt panel = APRON (tw_nap_sapper_apron, stored 256x256 in the atlas; gloss/colour_mask entries point at the black free area x=3072,y=3840).
+    Used by Old Guard Sappers. Atlas row y=3840 is filled to x=2048 now. Sapper abilities: chevaux_de_frise, earthworks, wooden_stakes, fougasse_basic (+ stats can_place_stakes=true).
 edit this list as you work to add more reminders for yourself.
 
 **General Outline**
