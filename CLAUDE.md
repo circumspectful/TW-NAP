@@ -62,6 +62,11 @@ NTW is an old game with many quirks. For example:
     men 30, dismount (can_dismount + dismounted spacing 0.8/1.75), musket via tw_nap_cavalry_musket_sword. mount_model is per UNIT, so Napoleon and escort share horse_covered_white.
     Foot Old Guard Gendarmerie: 60 men, total_cap/total_cap_mp 1, campmap_policing_bonus (boolean), recruited at sArmy5_staff_college (building_levels.only_in_capital = true => Paris for France).
     The cav test unit was removed (rows, loc and variants renamed into the foot unit). Clear AppData army_setups/battle_preferences if custom battle crashes.
+25. UNIT CARDS + CAPS (playtested): cards are RLE TGAs (icon 66x88 RGBA, info 280x300 RGB, same header as vanilla; Pillow compression='tga_rle'), named by the UNIFORM filename
+    (e.g. france_inf_skirm_french_young_guard_voltiguers - check the uniforms table, 'skirm' vs 'elite'). New-unit cards live in tw_nap_mod.pack; replacements of vanilla Old Guard / Young Guard cards
+    live in the Movie pack tw_nap_atlas.pack. Caps (campaign/MP): Old Guard Grens 2/1, OG Chasseurs 2/1, Sappers 1/1 (120 men), Fusilier-Gren 2/2, Fusilier-Chasseurs 2/2, Voltiguers 4/4, Tirailleurs 4/4, Gendarmes d'Elite 1/1.
+    Vanilla Old Guard / Young Guard caps are edited via a FULL COPY of vanilla db/units_tables/units in tw_nap_mod.pack (same data-coring trick as unit_stats_land).
+    Display names: "Middle Guard Fusilier-Grenadiers/-Chasseurs", "Gendarmes d'Elite" (loc pack only).
 edit this list as you work to add more reminders for yourself.
 
 **General Outline**
